@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Developer Enablement — Master Playbook</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232734;
+    --border: #2e3346;
+    --text: #e4e7ef;
+    --text-muted: #8b90a5;
+    --accent: #6c7cff;
+    --accent2: #4ecdc4;
+    --accent3: #ff6b9d;
+    --accent4: #ffd166;
+    --accent5: #a78bfa;
+    --green: #34d399;
+    --red: #f87171;
+    --orange: #fb923c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    text-align: center;
+    background: linear-gradient(135deg, #0f1117 0%, #1a1040 30%, #0f2027 60%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(108,124,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(78,205,196,0.06) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-2%, 2%); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(108,124,255,0.15);
+    border: 1px solid rgba(108,124,255,0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #6c7cff 50%, #4ecdc4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  .toc-section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .toc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .toc-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(108,124,255,0.1);
+  }
+
+  .toc-card .code-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+
+  .toc-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .toc-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  .tag-policy { background: rgba(255,107,157,0.15); color: var(--accent3); }
+  .tag-assess { background: rgba(255,209,102,0.15); color: var(--accent4); }
+  .tag-curriculum { background: rgba(108,124,255,0.15); color: var(--accent); }
+  .tag-workshop { background: rgba(78,205,196,0.15); color: var(--accent2); }
+  .tag-companion { background: rgba(167,139,250,0.15); color: var(--accent5); }
+  .tag-courses { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-metrics { background: rgba(248,113,113,0.15); color: var(--red); }
+  .tag-resistance { background: rgba(251,146,60,0.15); color: var(--orange); }
+  .tag-infra { background: rgba(108,124,255,0.15); color: var(--accent); }
+
+  section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .section-header .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 16px;
+    color: var(--text);
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    color: var(--accent2);
+  }
+
+  p { margin-bottom: 16px; }
+
+  .callout {
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .callout.warning { border-left-color: var(--accent4); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout.success { border-left-color: var(--green); }
+
+  .callout strong { display: block; margin-bottom: 6px; }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 24px 0;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  thead th {
+    background: var(--surface2);
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tbody tr:hover { background: rgba(108,124,255,0.04); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--accent2);
+  }
+
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    overflow-x: auto;
+    margin: 24px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--accent2);
+  }
+
+  .maturity-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .maturity-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .maturity-level {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  .level-0 { background: rgba(139,144,165,0.2); color: var(--text-muted); }
+  .level-1 { background: rgba(248,113,113,0.2); color: var(--red); }
+  .level-2 { background: rgba(251,146,60,0.2); color: var(--orange); }
+  .level-3 { background: rgba(255,209,102,0.2); color: var(--accent4); }
+  .level-4 { background: rgba(52,211,153,0.2); color: var(--green); }
+
+  .maturity-info h4 { margin-top: 0; color: var(--text); }
+  .maturity-info p { color: var(--text-muted); font-size: 14px; margin: 0; }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 16px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .phase-number {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .phase-1-color { background: rgba(108,124,255,0.2); color: var(--accent); }
+  .phase-2-color { background: rgba(78,205,196,0.2); color: var(--accent2); }
+  .phase-3-color { background: rgba(255,107,157,0.2); color: var(--accent3); }
+  .phase-4-color { background: rgba(255,209,102,0.2); color: var(--accent4); }
+
+  .phase-meta { flex: 1; }
+  .phase-meta h3 { margin: 0 0 4px; font-size: 18px; }
+  .phase-meta p { margin: 0; font-size: 13px; color: var(--text-muted); }
+
+  .objection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 768px) {
+    .objection-grid { grid-template-columns: 1fr; }
+  }
+
+  .objection-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .objection-card .objection {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .objection-card .response {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .anti-pattern {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 768px) {
+    .anti-pattern { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
+    .container { padding: 0 20px; }
+  }
+
+  .anti-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .anti-card .bad {
+    color: var(--red);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .anti-card .good {
+    color: var(--green);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .prompt-block {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .prompt-block::before {
+    content: 'MASTER PROMPT — COPY THIS';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+  }
+
+  .prompt-block pre {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text);
+    font-size: 12.5px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .stat-card .number {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-card .label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  ul { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 6px; font-size: 14px; }
+
+  .timeline {
+    position: relative;
+    margin: 32px 0;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+  }
+
+  .timeline-item h4 { margin-top: 0; }
+  .timeline-item p { margin-bottom: 0; font-size: 14px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Enterprise AI Enablement Playbook v1.0</div>
+    <h1>From Zero to Agentic AI — The Enterprise Developer's Complete Guide</h1>
+    <p>A master AI agent prompt, corporate policy framework, 12-month curriculum, and full toolbox for teaching your engineering team to use generative & agentic AI with enterprise rigor — not YouTube hype.</p>
+    <div class="stats-grid" style="margin-top: 40px;">
+      <div class="stat-card">
+        <div class="number">9</div>
+        <div class="label">Modular Sections</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">12</div>
+        <div class="label">Month Rollout</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">5</div>
+        <div class="label">Maturity Levels</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">∞</div>
+        <div class="label">Budget Cap</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc-section">
+    <h2 style="font-size: 28px; font-weight: 800;">What's Inside</h2>
+    <p style="color: var(--text-muted);">Each section can be generated independently using the master prompt. The prompt accepts customization parameters for your industry, company size, and regulatory environment.</p>
+    <div class="toc-grid">
+      <div class="toc-card">
+        <span class="code-tag tag-policy">[POLICY]</span>
+        <h3>Corporate AI Usage Policy</h3>
+        <p>Tiered usage classification, IP/licensing, data protection, security controls, accountability & governance.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-assess">[ASSESS]</span>
+        <h3>Skills Assessment & Maturity</h3>
+        <p>5-level maturity model, self-assessment instruments, peer calibration, personalized learning paths.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-curriculum">[CURRICULUM]</span>
+        <h3>12-Month Training Curriculum</h3>
+        <p>4 phases from foundations to mastery. Week-by-week topics, formats, resources, and capstone projects.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-workshop">[WORKSHOP]</span>
+        <h3>Workshop Facilitator Guides</h3>
+        <p>Minute-by-minute agendas, exercises, discussion prompts, pre-work, post-work, facilitator notes.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-companion">[COMPANION]</span>
+        <h3>Mentoring & Companionship</h3>
+        <p>AI Champions network, pair programming rotation, learning circles, 1:1 coaching, async support.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-courses">[COURSES]</span>
+        <h3>External Courses & Licenses</h3>
+        <p>Curated procurement list — DeepLearning.AI, IBM, NVIDIA, MIT, Stanford, Google GEAR, and tools.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-metrics">[METRICS]</span>
+        <h3>Success Metrics & ROI</h3>
+        <p>Leading/lagging indicators, ROI calculation template, reporting cadence, executive dashboards.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-resistance">[RESISTANCE]</span>
+        <h3>Handling Developer Resistance</h3>
+        <p>Evidence-based objection responses, engagement tactics for skeptical seniors, change management.</p>
+      </div>
+      <div class="toc-card">
+        <span class="code-tag tag-infra">[INFRA]</span>
+        <h3>Infrastructure & Tooling</h3>
+        <p>Approved tool stack, security architecture, API gateway, DLP integration, developer onboarding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: MASTER PROMPT -->
+  <section id="prompt">
+    <div class="section-header">
+      <span class="section-tag" style="background: rgba(108,124,255,0.15); color: var(--accent);">CORE</span>
+      <h2>The Master Agent Prompt</h2>
+    </div>
+
+    <p>Copy the prompt below into any capable LLM (Claude, GPT-4+, Gemini Pro). It functions as a <strong>modular generation engine</strong> — invoke any section code to produce that specific deliverable, tailored to your parameters.</p>
+
+    <div class="callout">
+      <strong>💡 How to use</strong>
+      Send the full system prompt, then follow up with commands like <code>Generate [POLICY]</code> or <code>Generate [CURRICULUM] Phase 2</code>. Add customization parameters: <code>INDUSTRY=fintech, REGULATORY_BURDEN=high, COMPANY_SIZE=medium</code>.
+    </div>
+
+    <div class="prompt-block">
+      <pre>You are **AI Enablement Architect**, an expert in enterprise software development culture,
+developer education pedagogy, organizational change management, and applied generative/agentic AI.
+
+## YOUR MISSION
+Design and generate a **complete, enterprise-grade AI enablement program** for an engineering
+organization where junior and senior developers currently struggle to adopt agentic AI in
+their daily workflows. The organization has an **unlimited budget** and wants a rigorous,
+measurable, long-term program — not superficial awareness training.
+
+## CONTEXT & CONSTRAINTS
+- Target population: Junior (0-3 yrs) and senior developers (4-15+ yrs) — proficient coders,
+  minimal AI experience.
+- Environment: Enterprise — regulated, code-reviewed, CI/CD, security policies, compliance, IP concerns.
+- Anti-patterns: No YouTube tutorial culture, no "vibe coding" hype, no shallow tips, no vendor lock-in.
+- Budget: Unlimited. Include paid courses, consulting, tooling licenses, dedicated headcount.
+- Timeline: 12-month rollout with quarterly milestones.
+
+## DELIVERABLES — Generate each when requested:
+
+[POLICY]    Corporate AI Usage Policy (tiered classification, IP, data protection, security,
+            governance, accountability, ethics, audit trail)
+[ASSESS]    Skills Maturity Model (5 levels: Unaware → Architect) + assessment instruments
+[CURRICULUM] 12-Month Curriculum in 4 phases:
+             Phase 1 (Mo 1-3): Foundation — "Understand the Machine" → Level 2
+             Phase 2 (Mo 4-6): Integration — "Reshape Your Workflow" → Level 3
+             Phase 3 (Mo 7-9): Advanced — "Build Intelligent Systems" → Level 4
+             Phase 4 (Mo 10-12): Mastery — "Lead the Change" → Champions
+[WORKSHOP]  Facilitator guides (pre-work, minute-by-minute agenda, exercises, post-work)
+[COMPANION] Mentoring program (Champions network, pair programming, learning circles, 1:1 coaching)
+[COURSES]   Curated external courses & enterprise license procurement list
+[METRICS]   Success metrics, ROI framework, reporting cadence
+[RESISTANCE] Change management playbook for developer skepticism
+[INFRA]     Technical infrastructure & security architecture blueprint
+
+## CUSTOMIZATION PARAMETERS (specify before generating):
+- COMPANY_SIZE: small (50-200) | medium (200-1000) | large (1000+)
+- INDUSTRY: fintech | healthtech | e-commerce | SaaS | defense | other
+- REGULATORY_BURDEN: low | medium | high | critical
+- CURRENT_AI_MATURITY: none | early | intermediate
+- PRIMARY_STACK: [your languages, frameworks, cloud provider]
+- TIMELINE: 6-month accelerated | 12-month standard | 18-month gradual
+
+## QUALITY STANDARDS
+- Every recommendation must be actionable — no vague "consider doing X."
+- Every external resource must be real and currently available.
+- Every timeline must be realistic — account for developer workload.
+- Every metric must be measurable.
+- Tone: Professional, direct, evidence-based. Write for smart skeptics, not enthusiasts.</pre>
+    </div>
+  </section>
+
+  <!-- SECTION: POLICY -->
+  <section id="policy">
+    <div class="section-header">
+      <span class="section-tag tag-policy">[POLICY]</span>
+      <h2>Corporate AI Usage Policy — Structure</h2>
+    </div>
+
+    <p>When you generate <code>[POLICY]</code>, the prompt produces a full policy document. Here is the structural framework it follows:</p>
+
+    <h3>Tiered Usage Classification</h3>
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>Category</th><th>Examples</th><th>Approval</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="color: var(--green); font-weight: 700;">Tier 1</span></td>
+          <td>Unrestricted</td>
+          <td>Code completion, documentation, test generation, refactoring suggestions, commit messages</td>
+          <td>None required</td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--accent4); font-weight: 700;">Tier 2</span></td>
+          <td>Supervised</td>
+          <td>Architecture decisions, security-sensitive code, database migrations, API design</td>
+          <td>Peer review + senior sign-off</td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--red); font-weight: 700;">Tier 3</span></td>
+          <td>Prohibited</td>
+          <td>Autonomous deployment, unreviewed production code, PII/PHI processing via external AI</td>
+          <td>Blocked by policy</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Key Policy Pillars</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;">
+      <div class="callout"><strong>🔒 Data Protection</strong>PII/PHI/PCI-DSS boundary rules. Data residency for GDPR. What goes to external APIs vs. internal models.</div>
+      <div class="callout"><strong>⚖️ Intellectual Property</strong>Code provenance tracking. License contamination prevention. Copyright ownership of AI output.</div>
+      <div class="callout"><strong>🛡️ Security Controls</strong>Approved tool list with version pinning. API key rotation. Network segmentation. Mandatory human review.</div>
+      <div class="callout"><strong>📋 Accountability</strong>Developer owns all committed code. AI interaction audit logging. Incident response for AI-related bugs.</div>
+    </div>
+
+    <div class="callout warning">
+      <strong>⚠️ Non-negotiable principle</strong>
+      AI-generated code must pass <em>identical</em> CI/CD quality gates as human-written code. No exceptions. No "AI-generated" fast-track. The developer who commits is fully accountable.
+    </div>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.nist.gov/artificial-intelligence/executive-order-safe-secure-and-trustworthy-artificial-intelligence" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">NIST AI Risk Management Framework (AI RMF 1.0)</a></td>
+          <td>NIST</td>
+          <td>Free</td>
+          <td>Foundational U.S. government framework for managing AI risks across the Govern, Map, Measure, and Manage lifecycle functions.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.iso.org/standard/81230.html" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">ISO/IEC 42001 — AI Management System</a></td>
+          <td>ISO / IEC</td>
+          <td>~$200 (doc); cert $10K–$50K+</td>
+          <td>First international standard for AI management systems — governance, risk controls, and continuous improvement.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.aigl.blog/ai-policy-template-june-2024/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AIGL AI Policy Template</a></td>
+          <td>AI Governance Lab</td>
+          <td>Free</td>
+          <td>Ready-to-adapt corporate AI policy template rooted in NIST AI RMF and ISO/IEC 42001, covering governance, ethics, and compliance.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.wipo.int/documents/d/frontier-technologies/docs-en-pdf-generative-ai-factsheet.pdf" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">WIPO Generative AI &amp; IP Fact Sheet</a></td>
+          <td>WIPO</td>
+          <td>Free</td>
+          <td>Authoritative guide on generative AI and intellectual property — IP infringement risks, training data licensing, and ownership of AI outputs.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: MATURITY MODEL -->
+  <section id="assess">
+    <div class="section-header">
+      <span class="section-tag tag-assess">[ASSESS]</span>
+      <h2>Developer AI Maturity Model</h2>
+    </div>
+
+    <p>Every developer is assessed against this model at program start, then reassessed quarterly. Training pathways are personalized based on current level.</p>
+
+    <div class="maturity-grid">
+      <div class="maturity-card">
+        <div class="maturity-level level-0">0</div>
+        <div class="maturity-info">
+          <h4>Unaware</h4>
+          <p>Has not used any AI coding tools. May have heard of ChatGPT but hasn't applied it to engineering work. Needs awareness + hands-on introduction.</p>
+        </div>
+      </div>
+      <div class="maturity-card">
+        <div class="maturity-level level-1">1</div>
+        <div class="maturity-info">
+          <h4>Explorer</h4>
+          <p>Uses AI for simple completions. Accepts output uncritically. Doesn't iterate on prompts. Treats AI as a search engine replacement. Needs structured prompt training + critical evaluation skills.</p>
+        </div>
+      </div>
+      <div class="maturity-card">
+        <div class="maturity-level level-2">2</div>
+        <div class="maturity-info">
+          <h4>Practitioner</h4>
+          <p>Crafts effective prompts with context, constraints, and examples. Reviews and edits AI output. Uses AI for tests, docs, refactoring. Understands model limitations. <strong>Target by Month 3.</strong></p>
+        </div>
+      </div>
+      <div class="maturity-card">
+        <div class="maturity-level level-3">3</div>
+        <div class="maturity-info">
+          <h4>Integrator</h4>
+          <p>Builds AI into personal workflows end-to-end. Chains multi-step operations. Has a personal prompt library. Mentors Level 0-1 colleagues. Measures their own productivity gains. <strong>Target by Month 6.</strong></p>
+        </div>
+      </div>
+      <div class="maturity-card">
+        <div class="maturity-level level-4">4</div>
+        <div class="maturity-info">
+          <h4>Architect</h4>
+          <p>Designs agentic workflows and multi-agent systems. Builds custom tools/agents for the team. Evaluates new AI tools. Contributes to AI strategy. Mentors at scale. <strong>Target for power users by Month 9.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://aimaturitymodel.mitre.org/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">MITRE AI Maturity Model &amp; Assessment Tool</a></td>
+          <td>MITRE Corporation</td>
+          <td>Free</td>
+          <td>Six-pillar AI maturity framework with free interactive assessment tool to benchmark organizational AI readiness.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.gartner.com/en/chief-information-officer/research/ai-maturity-model-toolkit" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Gartner AI Maturity Model Toolkit</a></td>
+          <td>Gartner</td>
+          <td>Gartner subscription (~$30K+/yr)</td>
+          <td>Evaluates AI readiness across strategy, governance, engineering, data, and culture with customized roadmap generation.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.workera.ai/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Workera — AI Skills Intelligence Platform</a></td>
+          <td>Workera</td>
+          <td>Custom enterprise pricing</td>
+          <td>AI-powered skills assessment across cloud, data, AI, and security — conversational and hands-on formats with skill dashboards.</td>
+        </tr>
+        <tr>
+          <td><a href="https://owasp.org/www-project-ai-maturity-assessment/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">OWASP AI Maturity Assessment (AIMA)</a></td>
+          <td>OWASP Foundation</td>
+          <td>Free (open-source)</td>
+          <td>Five-domain maturity framework focused on responsible, secure AI integration aligned with global standards.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: CURRICULUM -->
+  <section id="curriculum">
+    <div class="section-header">
+      <span class="section-tag tag-curriculum">[CURRICULUM]</span>
+      <h2>12-Month Training Curriculum</h2>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase-header">
+      <div class="phase-number phase-1-color">1</div>
+      <div class="phase-meta">
+        <h3>Foundation — "Understand the Machine"</h3>
+        <p>Months 1-3 · Goal: Every developer reaches Level 2 maturity</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Weeks</th><th>Topic</th><th>Format</th><th>Key Resources</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1-2</td><td><strong>How LLMs Actually Work</strong><br><span style="color: var(--text-muted); font-size: 13px;">Transformers, tokenization, attention, context windows, temperature</span></td><td>Instructor-led workshop (4h) + self-paced reading</td><td>Andrej Karpathy's "Intro to LLMs"; 3Blue1Brown neural network series</td></tr>
+        <tr><td>3-4</td><td><strong>Prompt Engineering That Works</strong><br><span style="color: var(--text-muted); font-size: 13px;">Structured prompting, few-shot, chain-of-thought, system prompts</span></td><td>Hands-on lab (4h) + pair exercises</td><td>DeepLearning.AI "Prompt Engineering for Developers" (free); OpenAI Cookbook</td></tr>
+        <tr><td>5-6</td><td><strong>AI-Assisted Coding in Practice</strong><br><span style="color: var(--text-muted); font-size: 13px;">GitHub Copilot, Cursor, Cody — tool-agnostic principles</span></td><td>Tool setup (2h) + 2-week daily practice sprint</td><td>Company-provisioned licenses; internal challenge board</td></tr>
+        <tr><td>7-8</td><td><strong>Critical Evaluation of AI Output</strong><br><span style="color: var(--text-muted); font-size: 13px;">Hallucination detection, license audit, security review</span></td><td>Red team exercise (4h)</td><td>OWASP LLM Top 10; internal vulnerability case studies</td></tr>
+        <tr><td>9-10</td><td><strong>AI for Testing & Documentation</strong><br><span style="color: var(--text-muted); font-size: 13px;">Test gen, doc gen, code explanation, review assist</span></td><td>Project-based on real codebase</td><td>IBM GenAI Engineering Certificate (Coursera)</td></tr>
+        <tr><td>11-12</td><td><strong>Foundation Capstone</strong><br><span style="color: var(--text-muted); font-size: 13px;">"AI-Enhanced Sprint" — complete a real sprint using AI</span></td><td>Team-based + demo day</td><td>Internal demo day; peer review</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.deeplearning.ai/short-courses/how-transformer-llms-work/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">How Transformer LLMs Work</a></td>
+          <td>DeepLearning.AI</td>
+          <td>Free</td>
+          <td>Concise course on Transformer internals — tokenization, embeddings, self-attention, and optimizations like KV cache.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">ChatGPT Prompt Engineering for Developers</a></td>
+          <td>DeepLearning.AI / OpenAI</td>
+          <td>Free</td>
+          <td>Developer-focused prompt engineering best practices — summarization, inferring, transforming, and building chatbots.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Prompt Engineering Learning Path</a></td>
+          <td>Pluralsight</td>
+          <td>~$29–$45/month</td>
+          <td>Multi-course path from beginner to advanced prompt engineering with hands-on labs.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.oreilly.com/library/view/ai-assisted-programming/9781098164553/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AI-Assisted Programming (Book)</a></td>
+          <td>O'Reilly Media</td>
+          <td>~$49/mo or ~$40–$50</td>
+          <td>Covers AI tools across the full dev lifecycle — requirements, coding, debugging, testing, and documentation.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.coursera.org/learn/generative-ai-course-in-software-testing-and-documentation" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Generative AI in Software Testing &amp; Documentation</a></td>
+          <td>Coursera / Simplilearn</td>
+          <td>Free to audit; cert ~$49</td>
+          <td>Beginner course on AI-driven test case generation, vulnerability detection, and automated documentation.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.manning.com/books/software-testing-with-generative-ai" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Software Testing with Generative AI (Book)</a></td>
+          <td>Manning Publications</td>
+          <td>~$40–$50</td>
+          <td>Practical guide on using LLMs to expand, automate, and enhance software testing with prompt engineering techniques.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Phase 2 -->
+    <div class="phase-header">
+      <div class="phase-number phase-2-color">2</div>
+      <div class="phase-meta">
+        <h3>Integration — "Reshape Your Workflow"</h3>
+        <p>Months 4-6 · Goal: Every developer reaches Level 3 maturity</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Weeks</th><th>Topic</th><th>Format</th><th>Key Resources</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>13-14</td><td><strong>RAG for Internal Knowledge</strong></td><td>Workshop (4h) + prototype build</td><td>DeepLearning.AI RAG course; LangChain docs</td></tr>
+        <tr><td>15-16</td><td><strong>Multi-Step AI Workflows</strong></td><td>Lab (4h): build a 5-step workflow</td><td>LangChain / LangGraph tutorials</td></tr>
+        <tr><td>17-18</td><td><strong>AI in Code Review & Architecture</strong></td><td>2-week structured practice</td><td>Internal rubric + AI integration points</td></tr>
+        <tr><td>19-20</td><td><strong>Custom Instructions for Your Stack</strong></td><td>Workshop (3h): team AI configs</td><td>Internal prompt library (Git-versioned)</td></tr>
+        <tr><td>21-22</td><td><strong>Measuring AI Impact</strong></td><td>Data collection + analysis</td><td>Internal dashboards; survey instruments</td></tr>
+        <tr><td>23-24</td><td><strong>Integration Capstone — "Workflow Transformation"</strong></td><td>Individual: before/after with metrics</td><td>Presentation to engineering leadership</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.deeplearning.ai/courses/retrieval-augmented-generation-rag/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Retrieval Augmented Generation (RAG)</a></td>
+          <td>DeepLearning.AI / Coursera</td>
+          <td>Free (optional cert fee)</td>
+          <td>End-to-end RAG system design — retrieval methods, vector databases, chunking, reranking, and production deployment.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.coursera.org/specializations/building-ai-agents-and-agentic-workflows" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Building AI Agents &amp; Agentic Workflows</a></td>
+          <td>Coursera / IBM</td>
+          <td>~$49/month (free audit)</td>
+          <td>Three-course specialization on AI agents with LangChain, LangGraph, CrewAI, AutoGen, and multi-agent orchestration.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.coderabbit.ai/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">CodeRabbit — AI Code Review</a></td>
+          <td>CodeRabbit</td>
+          <td>Free (OSS); Pro $12/user/mo</td>
+          <td>AI-powered PR code review with one-click fixes, architecture diagrams, and agentic bug detection (SOC 2 Type II).</td>
+        </tr>
+        <tr>
+          <td><a href="https://getdx.com/blog/ai-measurement-hub/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">DX AI Measurement Hub</a></td>
+          <td>DX</td>
+          <td>Free (content); platform varies</td>
+          <td>Framework for measuring AI developer impact across Utilization, Impact, and Cost dimensions with ROI guidance.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Building Effective Agents (Guide)</a></td>
+          <td>Anthropic</td>
+          <td>Free</td>
+          <td>Engineering guide on agentic design patterns — prompt chaining, routing, parallelization, and orchestrator-workers.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Phase 3 -->
+    <div class="phase-header">
+      <div class="phase-number phase-3-color">3</div>
+      <div class="phase-meta">
+        <h3>Advanced & Agentic — "Build Intelligent Systems"</h3>
+        <p>Months 7-9 · Goal: Power users reach Level 4</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Weeks</th><th>Topic</th><th>Format</th><th>Key Resources</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>25-26</td><td><strong>Agentic AI Architecture</strong><br><span style="color: var(--text-muted); font-size: 13px;">ReAct, tool use, planning, reflection, multi-agent</span></td><td>Lecture + lab (6h)</td><td>DeepLearning.AI Agentic AI course; Andrew Ng's talks</td></tr>
+        <tr><td>27-28</td><td><strong>Building Agents with Production Frameworks</strong><br><span style="color: var(--text-muted); font-size: 13px;">LangGraph, CrewAI, AutoGen, OpenAI Agents SDK</span></td><td>Hands-on lab (8h)</td><td>Udemy Complete Agentic AI Course; framework docs</td></tr>
+        <tr><td>29-30</td><td><strong>Model Context Protocol (MCP) & Tool Integration</strong></td><td>Lab (4h): build MCP servers</td><td>Anthropic MCP spec; community examples</td></tr>
+        <tr><td>31-32</td><td><strong>Agent Evaluation, Safety & Guardrails</strong></td><td>Workshop (4h)</td><td>NVIDIA Agentic AI Professional cert materials</td></tr>
+        <tr><td>33-34</td><td><strong>Production Deployment of AI Agents</strong></td><td>DevOps lab (4h)</td><td>Google GEAR program; infra team collab</td></tr>
+        <tr><td>35-36</td><td><strong>Advanced Capstone — "Ship an Agent"</strong></td><td>Team project: build & deploy</td><td>Internal agent showcase; architecture review</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.enkryptai.com/blog/securing-ai-agents-a-comprehensive-framework-for-agent-guardrails" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Securing AI Agents with Layered Guardrails</a></td>
+          <td>Enkrypt AI</td>
+          <td>Free</td>
+          <td>Comprehensive framework for implementing layered security guardrails — governance, privacy, and tool-misuse risk vectors.</td>
+        </tr>
+        <tr>
+          <td><a href="https://humanloop.com/platform/prompt-management" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Humanloop Platform (Prompt Management)</a></td>
+          <td>Humanloop</td>
+          <td>Free trial; enterprise pricing</td>
+          <td>Enterprise prompt engineering, evaluation, and human feedback with version control and CI/CD integration.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.designsprint.academy/innovation-programs/ai-agentic-bootcamp" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Agentic AI Bootcamp for Enterprise Teams</a></td>
+          <td>Design Sprint Academy</td>
+          <td>Custom pricing (on-site)</td>
+          <td>5-day on-site program to align, prototype, and build working AI Agent MVPs tied to real business goals.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.aicerts.ai/aict-program/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AI CERTs® Certified Trainer (AICT)</a></td>
+          <td>AI CERTs</td>
+          <td>Application required</td>
+          <td>Certification program to create proficient AI trainers with curriculum access and community for scaling AI education.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Phase 4 -->
+    <div class="phase-header">
+      <div class="phase-number phase-4-color">4</div>
+      <div class="phase-meta">
+        <h3>Mastery & Multiplication — "Lead the Change"</h3>
+        <p>Months 10-12 · Goal: Internal AI champions. Sustain beyond Year 1.</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Weeks</th><th>Topic</th><th>Format</th><th>Key Resources</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>37-38</td><td><strong>Teaching AI Skills</strong> (train-the-trainer)</td><td>Workshop (6h)</td><td>External facilitator; L&D partnership</td></tr>
+        <tr><td>39-40</td><td><strong>AI Strategy for Engineering Teams</strong></td><td>Executive roundtable</td><td>CTO participation; Gartner/Forrester reports</td></tr>
+        <tr><td>41-42</td><td><strong>Emerging Frontiers</strong></td><td>Guest speaker series</td><td>External experts; conference budget</td></tr>
+        <tr><td>43-44</td><td><strong>Building the Internal AI Platform</strong></td><td>2-day hackathon</td><td>Cross-team; platform engineering support</td></tr>
+        <tr><td>45-48</td><td><strong>Year-End Assessment & Certification</strong></td><td>Full reassessment; celebration</td><td>Internal certification; Year 2 planning</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://langfuse.com/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Langfuse — LLM Observability Platform</a></td>
+          <td>Langfuse</td>
+          <td>Free (OSS); paid cloud</td>
+          <td>Open-source observability and analytics for LLM apps — trace, debug, and evaluate agentic systems in production.</td>
+        </tr>
+        <tr>
+          <td><a href="https://datasciencedojo.com/agentic-ai-conference/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Agentic AI Conference</a></td>
+          <td>Data Science Dojo</td>
+          <td>Varies (virtual, tiered)</td>
+          <td>Virtual conference on governance, security, and architecture of agentic AI with leaders from top AI companies.</td>
+        </tr>
+        <tr>
+          <td><a href="https://huggingface.co/learn/mcp-course/en/unit0/introduction" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Model Context Protocol (MCP) Course</a></td>
+          <td>Hugging Face / Anthropic</td>
+          <td>Free</td>
+          <td>Beginner-to-informed course on MCP — theory, design, and practical application with hands-on assignments.</td>
+        </tr>
+        <tr>
+          <td><a href="https://arxiv.org/abs/2601.18491" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AgentDoG: Diagnostic Guardrail Framework</a></td>
+          <td>Zhang et al. (Cornell / Tsinghua)</td>
+          <td>Free</td>
+          <td>Research paper on a diagnostic guardrail framework for fine-grained, contextual monitoring of AI agent safety.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: COURSES -->
+  <section id="courses">
+    <div class="section-header">
+      <span class="section-tag tag-courses">[COURSES]</span>
+      <h2>External Courses & Licenses to Procure</h2>
+    </div>
+
+    <h3>Required for All Developers</h3>
+    <table>
+      <thead><tr><th>Course</th><th>Provider</th><th>Duration</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>ChatGPT Prompt Engineering for Developers</td><td>DeepLearning.AI</td><td>1 hour</td><td>Free</td></tr>
+        <tr><td>Generative AI for Everyone</td><td>DeepLearning.AI / Coursera</td><td>3 weeks</td><td>~$49/month</td></tr>
+        <tr><td>Agentic AI Course</td><td>DeepLearning.AI</td><td>4 weeks</td><td>~$49/month</td></tr>
+        <tr><td>GitHub Copilot Fundamentals</td><td>GitHub / Microsoft</td><td>2 hours</td><td>Included w/ license</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Required for Senior Developers & Tech Leads</h3>
+    <table>
+      <thead><tr><th>Course</th><th>Provider</th><th>Duration</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>IBM Generative AI Engineering Professional Certificate</td><td>IBM / Coursera</td><td>3-6 months</td><td>~$49/month</td></tr>
+        <tr><td>IBM RAG and Agentic AI Professional Certificate</td><td>IBM / Coursera</td><td>3-6 months</td><td>~$49/month</td></tr>
+        <tr><td>The Complete Agentic AI Engineering Course</td><td>Udemy</td><td>40+ hours</td><td>~$100</td></tr>
+        <tr><td>Machine Learning Specialization</td><td>DeepLearning.AI + Stanford</td><td>2-3 months</td><td>~$49/month</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Elective / Deep Specialization</h3>
+    <table>
+      <thead><tr><th>Course</th><th>Provider</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>NVIDIA Agentic AI Professional Certification</td><td>NVIDIA DLI</td><td>~$500</td></tr>
+        <tr><td>Google GEAR Program</td><td>Google Cloud Skills</td><td>Free (w/ Cloud credits)</td></tr>
+        <tr><td>Agent Engineering</td><td>Towards AI Academy</td><td>~$500</td></tr>
+        <tr><td>MIT Professional Certificate in ML & AI</td><td>MIT xPRO</td><td>~$4,200</td></tr>
+        <tr><td>Stanford AI Professional Program</td><td>Stanford Online</td><td>~$3,000+</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Enterprise Licenses</h3>
+    <table>
+      <thead><tr><th>Tool</th><th>Purpose</th><th>Est. Cost</th></tr></thead>
+      <tbody>
+        <tr><td>GitHub Copilot Enterprise</td><td>AI pair programming</td><td>$39/user/month</td></tr>
+        <tr><td>Cursor Pro</td><td>AI-native IDE</td><td>$20/user/month</td></tr>
+        <tr><td>Coursera for Business</td><td>Centralized learning</td><td>Enterprise pricing</td></tr>
+        <tr><td>O'Reilly / Pluralsight</td><td>Reference library</td><td>Enterprise pricing</td></tr>
+        <tr><td>Azure OpenAI / AWS Bedrock / GCP Vertex</td><td>Secure AI inference</td><td>Usage-based</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://maven.com/aimakerspace/ai-eng-bootcamp" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AI Engineering Bootcamp</a></td>
+          <td>AI Makerspace (Maven)</td>
+          <td>Premium (check site)</td>
+          <td>10-week certification bootcamp for building production-grade agentic AI applications using open-source tools.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.fullstackacademy.com/programs/ai-machine-learning-bootcamp" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AI &amp; Machine Learning Bootcamp</a></td>
+          <td>Fullstack Academy</td>
+          <td>Varies (check site)</td>
+          <td>26-week part-time bootcamp covering Generative AI, Agentic AI, and MLOps with hands-on projects.</td>
+        </tr>
+        <tr>
+          <td><a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">MCP: Advanced Topics</a></td>
+          <td>Anthropic Academy</td>
+          <td>Contact for pricing</td>
+          <td>Deep-dive into MCP advanced features — sampling, notifications, transport, and production deployment.</td>
+        </tr>
+        <tr>
+          <td><a href="https://frontendmasters.com/courses/mcp/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Complete Intro to MCP</a></td>
+          <td>Frontend Masters</td>
+          <td>~$39/month</td>
+          <td>Hands-on course: code an MCP server from scratch, interact with apps, and learn security best practices.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- SECTION: WORKSHOP -->
+  <section id="workshop">
+    <div class="section-header">
+      <span class="section-tag tag-workshop">[WORKSHOP]</span>
+      <h2>Workshop Facilitation Guides</h2>
+    </div>
+
+    <p>Each workshop includes pre-work, minute-by-minute agendas, hands-on exercises, discussion prompts, post-work assignments, and facilitator notes. Designed to be <strong>skepticism-friendly</strong> — addressing senior developer concerns head-on with evidence and hands-on proof.</p>
+
+    <div class="callout">
+      <strong>💡 Generate any workshop</strong>
+      Use <code>Generate [WORKSHOP] "Topic Name"</code> with the master prompt to produce a complete facilitator guide for any curriculum topic.
+    </div>
+
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.sessionlab.com/blog/ai-for-training/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">SessionLab — AI Workshop Design</a></td>
+          <td>SessionLab</td>
+          <td>Free plan; Pro from $14.99/mo</td>
+          <td>Workshop planning with AI that transforms outlines into detailed facilitator guides with agendas and evaluation criteria.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.innovationtraining.org/ai-facilitation-training-workshop-for-program-designers-and-facilitators/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">AI Facilitation Training Workshop</a></td>
+          <td>Innovation Training</td>
+          <td>Custom pricing</td>
+          <td>Workshop for facilitators to integrate AI into design, delivery, brainstorming, and post-workshop documentation.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.improving.com/services/training/ai/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Corporate AI Training &amp; Workshops</a></td>
+          <td>Improving</td>
+          <td>Custom pricing</td>
+          <td>End-to-end enterprise AI workshop delivery — executives, engineers, product managers — onsite or virtual.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.virti.com/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Virti — AI Role-Play &amp; Immersive Training</a></td>
+          <td>Virti</td>
+          <td>From $99/mo; enterprise pricing</td>
+          <td>AI-powered training with virtual humans, branching scenarios, and no-code builder — adaptable for developer simulations.</td>
+        </tr>
+        <tr>
+          <td><a href="https://pair.withgoogle.com/guidebook-v2/workshop/Guidebook-Workshop-Facilitator-Guide.pdf" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Google PAIR Workshop Facilitator Guide</a></td>
+          <td>Google PAIR</td>
+          <td>Free (PDF)</td>
+          <td>Ready-to-use facilitator guide for human-centered AI workshops with structured exercises and timing.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: COMPANION -->
+  <section id="companion">
+    <div class="section-header">
+      <span class="section-tag tag-companion">[COMPANION]</span>
+      <h2>Mentoring & Companionship Program</h2>
+    </div>
+
+    <h3>AI Champions Network</h3>
+    <ul>
+      <li><strong>Selection criteria:</strong> Demonstrated skill + peer credibility (not just enthusiasm)</li>
+      <li><strong>Ratio:</strong> 1 champion per 8 developers maximum</li>
+      <li><strong>Responsibilities:</strong> Weekly office hours, Slack moderation, code review mentoring</li>
+      <li><strong>Incentives:</strong> Conference attendance, certification funding, career ladder credit</li>
+    </ul>
+
+    <h3>Pair Programming with AI</h3>
+    <ul>
+      <li>Weekly 90-minute sessions: one drives, one observes, both use AI</li>
+      <li>Cross-team rotation to spread techniques</li>
+      <li>Structured reflection template after each session</li>
+    </ul>
+
+    <h3>AI Learning Circles</h3>
+    <ul>
+      <li>5-7 developers, mixed seniority, bi-weekly 45 min</li>
+      <li>Format: share a win → share a failure → discuss a technique → set a challenge</li>
+      <li>Rotating facilitation builds leadership muscle</li>
+    </ul>
+
+    <h3>1:1 AI Coaching (Intervention Track)</h3>
+    <ul>
+      <li>For developers below Level 1 after Month 3</li>
+      <li>4-week intensive with daily check-ins</li>
+      <li>External AI coaching service or dedicated internal senior developer</li>
+    </ul>
+
+    <h3>Async Support Infrastructure</h3>
+    <ul>
+      <li><code>#ai-engineering</code> Slack channel (moderated by champions)</li>
+      <li>Internal wiki: prompt library, pattern catalog, <em>failure museum</em></li>
+      <li>Weekly AI digest email: curated tips, internal success stories, external news</li>
+    </ul>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://github.com/features/copilot" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">GitHub Copilot — AI Pair Programming</a></td>
+          <td>GitHub (Microsoft)</td>
+          <td>Free tier; Biz $19/user/mo; Ent $39/user/mo</td>
+          <td>Most widely adopted AI pair programmer — inline suggestions, chat assistance, agent mode, and enterprise controls.</td>
+        </tr>
+        <tr>
+          <td><a href="https://mentorcruise.com/filter/softwareengineering/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">MentorCruise — Developer Mentoring</a></td>
+          <td>MentorCruise</td>
+          <td>~$50–$300/month per mentor</td>
+          <td>Vetted marketplace connecting developers with experienced mentors for 1-on-1 career and AI skill mentoring.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.atlassian.com/team-playbook/plays/learning-circle" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Learning Circle Play</a></td>
+          <td>Atlassian</td>
+          <td>Free</td>
+          <td>Step-by-step methodology for facilitating learning circles with a &ldquo;Mentoring Ring&rdquo; variation for peer programs.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.togetherplatform.com/blog/mentoring-framework" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Together Platform — Enterprise Mentoring</a></td>
+          <td>Together Software</td>
+          <td>Enterprise pricing</td>
+          <td>Structured mentoring framework with intelligent matching, discussion guides, and &ldquo;Crawl, Walk, Run&rdquo; scaling.</td>
+        </tr>
+        <tr>
+          <td><a href="https://honehq.com/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Hone — AI + Human Coaching</a></td>
+          <td>Hone (HoneHQ)</td>
+          <td>Enterprise pricing</td>
+          <td>Blended AI-and-human coaching for leadership and skill development with personalized practice scenarios.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: RESISTANCE -->
+  <section id="resistance">
+    <div class="section-header">
+      <span class="section-tag tag-resistance">[RESISTANCE]</span>
+      <h2>Handling Developer Resistance</h2>
+    </div>
+
+    <p>Many senior developers will be skeptical. This is <em>healthy</em>. Your job is not to suppress skepticism — it's to channel it into rigorous evaluation. Here's how:</p>
+
+    <h3>Common Objections & Evidence-Based Responses</h3>
+
+    <div class="objection-grid">
+      <div class="objection-card">
+        <div class="objection">❌ "AI generates garbage code"</div>
+        <div class="response">✅ Live demo: bad prompts → bad output, then good prompts → good output. The tool amplifies skill, it doesn't replace it. Show the difference a well-crafted system prompt makes.</div>
+      </div>
+      <div class="objection-card">
+        <div class="objection">❌ "It'll replace us"</div>
+        <div class="response">✅ Data shows AI + human consistently outperforms AI alone. Developers who use AI are more valuable, not less. Frame it as career insurance, not a threat.</div>
+      </div>
+      <div class="objection-card">
+        <div class="objection">❌ "I'm faster without it"</div>
+        <div class="response">✅ Challenge accepted: timed head-to-head on real boilerplate tasks. Most skeptics convert after seeing 30%+ time savings. Let the evidence do the talking.</div>
+      </div>
+      <div class="objection-card">
+        <div class="objection">❌ "It's just hype"</div>
+        <div class="response">✅ Agree that hype exists. Then show concrete enterprise data and your own internal metrics. Separate signal from noise together — that's exactly what smart engineers do.</div>
+      </div>
+      <div class="objection-card">
+        <div class="objection">❌ "Security/IP concerns"</div>
+        <div class="response">✅ Walk through the corporate policy. Show approved tools, data boundaries, audit trails. Address the real concern with real controls — not dismissal.</div>
+      </div>
+      <div class="objection-card">
+        <div class="objection">❌ "I don't want to learn another tool"</div>
+        <div class="response">✅ This is a meta-skill, not a tool. The skill is working with AI. Tools change every 6 months; the reasoning skill compounds forever.</div>
+      </div>
+    </div>
+
+    <h3>Engagement Strategy for Resistant Seniors</h3>
+    <div class="callout success">
+      <strong>The 5 Rules</strong>
+      <ol style="margin-top: 8px;">
+        <li><strong>Respect their expertise</strong> — AI is a force multiplier for their skills, not a replacement.</li>
+        <li><strong>Start with their pain points</strong> — Ask what they hate doing. Show AI solving that specific thing.</li>
+        <li><strong>Give them agency</strong> — Let them choose their first AI project. Forced adoption backfires.</li>
+        <li><strong>Leverage peer proof</strong> — One respected senior who's converted beats any training deck.</li>
+        <li><strong>Make Phase 1 opt-in</strong> — Mandates breed resentment. Mandate only after internal proof exists.</li>
+      </ol>
+    </div>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.prosci.com/blog/ai-adoption" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Prosci ADKAR Model — AI Adoption</a></td>
+          <td>Prosci</td>
+          <td>Free; cert from ~$4,500</td>
+          <td>Individual-focused change management framework (Awareness, Desire, Knowledge, Ability, Reinforcement) for AI adoption.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.augmentcode.com/guides/6-change-management-strategies-to-scale-ai-adoption-in-engineering-teams" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">6 Change Management Strategies for AI</a></td>
+          <td>Augment Code</td>
+          <td>Free (guide)</td>
+          <td>Compares six frameworks (ADKAR, Kotter, McKinsey 7-S, etc.) specifically for engineering AI adoption and resistance.</td>
+        </tr>
+        <tr>
+          <td><a href="https://online.hbs.edu/blog/post/ai-adoption-barriers" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Overcome Barriers to AI Adoption</a></td>
+          <td>Harvard Business School Online</td>
+          <td>Free (article); courses ~$1,750+</td>
+          <td>Strategic guide on AI readiness assessments, sustainable adoption rates (75–85%), and pilot project methodology.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.kognitos.com/blog/ai-resistance/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">The Real Cause of AI Resistance</a></td>
+          <td>Kognitos</td>
+          <td>Free (article)</td>
+          <td>Root-cause analysis of developer AI resistance with design-level solutions for trust and accessibility.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: ANTI-PATTERNS -->
+  <section id="antipatterns">
+    <div class="section-header">
+      <span class="section-tag" style="background: rgba(248,113,113,0.15); color: var(--red);">AVOID</span>
+      <h2>Anti-Patterns That Kill AI Adoption</h2>
+    </div>
+
+    <div class="anti-pattern">
+      <div class="anti-card">
+        <div class="bad">❌ Mandatory "AI day" with no follow-up</div>
+        <div class="good">✅ Sustained weekly practice embedded in real work</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ Same Udemy link for everyone</div>
+        <div class="good">✅ Personalized pathways based on maturity assessment</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ Measuring "people trained"</div>
+        <div class="good">✅ Measuring maturity progression + productivity metrics</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ AI as a separate skill silo</div>
+        <div class="good">✅ Integrated into code review, sprint, and architecture processes</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ "We're a Copilot shop" — vendor lock-in</div>
+        <div class="good">✅ Tool-agnostic principles; tools change every 6 months</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ No policy → YOLO AI usage</div>
+        <div class="good">✅ Policy first, then enablement. Trust comes from guardrails.</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ Ignoring skeptics or forcing adoption</div>
+        <div class="good">✅ Address concerns with evidence; let proof convert them</div>
+      </div>
+      <div class="anti-card">
+        <div class="bad">❌ Exec mandate without exec participation</div>
+        <div class="good">✅ Leaders visibly use AI and share their own learning</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: QUICK START -->
+  <section id="quickstart">
+    <div class="section-header">
+      <span class="section-tag" style="background: rgba(52,211,153,0.15); color: var(--green);">START</span>
+      <h2>Quick-Start Implementation Timeline</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Week 0 — Preparation</h4>
+        <p>Deploy self-assessment survey · Get policy through legal review · Procure tools & licenses · Identify 5-8 AI Champions · Set up #ai-engineering Slack channel</p>
+      </div>
+      <div class="timeline-item" style="--dot-color: var(--accent2);">
+        <h4>Month 1 — Launch</h4>
+        <p>All-hands kickoff with CTO · Deliver "How LLMs Work" workshop · Start pair programming rotation · Champions begin office hours</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Monthly Rhythm</h4>
+        <p>📅 Daily: developers use AI in normal work · Weekly: 90-min pair session + champion hours · Bi-weekly: learning circles · Monthly: workshop + metrics update</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Quarterly Checkpoints</h4>
+        <p>Maturity reassessment · Executive ROI report · Policy review · Curriculum adjustment based on data</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Year End</h4>
+        <p>Full program retrospective · Internal certification ceremony · Career ladder integration · Year 2 proposal with proven ROI</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: ROI -->
+  <section id="metrics">
+    <div class="section-header">
+      <span class="section-tag tag-metrics">[METRICS]</span>
+      <h2>Success Metrics & ROI Framework</h2>
+    </div>
+
+    <h3>Leading Indicators (Monthly)</h3>
+    <ul>
+      <li>% of developers at each maturity level (target: 80% at Level 2+ by Month 6)</li>
+      <li>AI tool daily active users / total developers</li>
+      <li>AI-assisted PRs merged per week</li>
+      <li>Training module completion rates</li>
+      <li>Champion office hour attendance</li>
+    </ul>
+
+    <h3>Lagging Indicators (Quarterly)</h3>
+    <ul>
+      <li>Developer velocity (story points, cycle time) — before vs. after</li>
+      <li>Code quality (bug density, test coverage) — before vs. after</li>
+      <li>Developer satisfaction survey (AI-specific questions)</li>
+      <li>Time-to-onboard for new hires</li>
+      <li>Internal AI agents built and deployed</li>
+    </ul>
+
+    <h3>ROI Calculation</h3>
+    <pre>
+Annual Program Cost  = Training + Licenses + Headcount + External Services
+Productivity Gain    = (Avg hours saved/dev/week) × (Hourly cost) × (# devs) × 50 weeks
+Quality Improvement  = (Reduction in prod incidents) × (Avg incident cost)
+ROI                  = (Total Gain − Total Cost) / Total Cost × 100%</pre>
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://getdx.com/blog/ai-measurement-hub/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">DX — Developer Intelligence Platform</a></td>
+          <td>DX</td>
+          <td>Custom enterprise pricing</td>
+          <td>Research-backed AI impact measurement across Utilization, Impact, and Cost with DORA/SPACE/DevEx integration.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.faros.ai/blog/ai-productivity-metrics" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Faros AI — GAINS™ Framework</a></td>
+          <td>Faros AI</td>
+          <td>Free tier; enterprise on request</td>
+          <td>Open analytics platform with 10-dimension GAINS™ diagnostic for measuring AI productivity at scale.</td>
+        </tr>
+        <tr>
+          <td><a href="https://larridin.com/developer-productivity-hub/developer-productivity-benchmarks-2026" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Larridin — AI-Native Engineering Benchmarks</a></td>
+          <td>Larridin</td>
+          <td>Free (report)</td>
+          <td>Quantitative benchmarks for AI adoption, velocity, quality, and ROI — average 2.5–3.5× tool ROI.</td>
+        </tr>
+        <tr>
+          <td><a href="https://blog.exceeds.ai/best-developer-productivity-metrics-ai/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Exceeds AI — Code-Level ROI Analytics</a></td>
+          <td>Exceeds AI</td>
+          <td>Custom pricing</td>
+          <td>AI ROI via code-level analysis — AI Usage Diff Mapping, Prompt-to-Commit Rate, and AI vs. Human Defect Density.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: INFRA -->
+  <section id="infra">
+    <div class="section-header">
+      <span class="section-tag tag-infra">[INFRA]</span>
+      <h2>Technical Infrastructure &amp; Tooling</h2>
+    </div>
+
+    <h3>Approved AI Tool Stack</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Tool</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>IDE Integration</td><td>GitHub Copilot Enterprise + Cursor Pro</td><td>AI pair programming &amp; AI-native IDE</td></tr>
+        <tr><td>Chat Interface</td><td>ChatGPT Enterprise / Claude Enterprise / Azure OpenAI</td><td>Interactive AI assistance</td></tr>
+        <tr><td>Agent Framework</td><td>LangChain + LangGraph (primary); CrewAI (experimental)</td><td>Agentic workflow orchestration</td></tr>
+        <tr><td>RAG Platform</td><td>Azure AI Search / Elasticsearch + embeddings</td><td>Internal knowledge retrieval</td></tr>
+        <tr><td>Model Access</td><td>Azure OpenAI, AWS Bedrock, GCP Vertex</td><td>Secure multi-provider AI inference</td></tr>
+        <tr><td>Monitoring</td><td>LangSmith / Opik + Datadog</td><td>Agent tracing &amp; infrastructure monitoring</td></tr>
+        <tr><td>Prompt Management</td><td>Internal Git repository with PR-based review</td><td>Version-controlled shared prompts</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Security Architecture</h3>
+    <ul>
+      <li>API gateway with rate limiting and content filtering</li>
+      <li>DLP integration for outbound AI requests</li>
+      <li>Audit logging of all AI interactions (90-day minimum retention)</li>
+      <li>Separate environments: dev AI (permissive) → staging AI (monitored) → prod AI (locked down)</li>
+    </ul>
+
+
+    <h3>📚 External Resources</h3>
+    <table>
+      <thead>
+        <tr><th>Resource</th><th>Provider</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.endpointprotector.com/solutions/netwrix-endpoint-protector-dlp-for-llms" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Netwrix Endpoint Protector (DLP for LLMs)</a></td>
+          <td>Netwrix</td>
+          <td>Custom enterprise pricing</td>
+          <td>DLP solution that inspects and blocks sensitive data in prompts and file uploads before they reach AI tools.</td>
+        </tr>
+        <tr>
+          <td><a href="https://developers.cloudflare.com/ai-gateway/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Cloudflare AI Gateway</a></td>
+          <td>Cloudflare</td>
+          <td>Free tier; paid plans vary</td>
+          <td>Proxy layer providing observability, logging, caching, and rate limiting as a unified control plane for LLM interactions.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.mintlify.com/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Mintlify — Developer Documentation</a></td>
+          <td>Mintlify</td>
+          <td>Free to enterprise pricing</td>
+          <td>Documentation and developer portal optimized for humans and AI agents — automated doc generation and interactive API references.</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.getport.io/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Port — Internal Developer Portal</a></td>
+          <td>Port</td>
+          <td>Free to enterprise pricing</td>
+          <td>Developer portal unifying organizational context for human developers and AI agents — reduces manual work and improves onboarding.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+</div>
+
+<div class="footer">
+  <p style="margin-bottom: 4px;">Enterprise AI Developer Enablement Playbook v1.0 · April 2026</p>
+  <p>Review cadence: Quarterly · Generated with enterprise rigor, not YouTube hype.</p>
+</div>
+
+</body>
+</html>
